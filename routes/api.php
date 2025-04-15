@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+
+use App\Http\Controllers\InterviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,9 @@ use App\Http\Controllers\UtilisateurController;
 
 Route::post('/utilisateurs', [UtilisateurController::class, 'store']);
 
+
+//formulaire de d'interview
+Route::post('/interviews', [InterviewController::class, 'store']);
 
 //login
 Route::post('/login' , [AuthController::class, 'login']);
