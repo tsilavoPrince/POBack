@@ -4,7 +4,7 @@ services:
     env: docker
     plan: free
     buildCommand: ""
-    startCommand: "sh -c 'php artisan serve --host=0.0.0.0 --port=3000'"
+    startCommand: "sh -c 'php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=3000'"
     dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
