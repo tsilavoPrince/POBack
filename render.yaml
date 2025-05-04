@@ -14,12 +14,12 @@ services:
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        value: btefqcdii9lfuqunnm5u-mysql.services.clever-cloud.com
+        value: btefqcdii9lfuqunnm5u-mysql.services.clever-cloud.com  # Hôte de la base de données
       - key: DB_PORT
-        value: 3306
+        value: 3306  # Port de la base de données
       - key: DB_DATABASE
-        value: btefqcdii9lfuqunnm5u
+        value: btefqcdii9lfuqunnm5u  # Nom de la base de données
       - key: DB_USERNAME
-        value: utajwenhwaa41bcr
+        value: utajwenhwaa41bcr  # Utilisateur de la base de données
       - key: DB_PASSWORD
-        value: VIcpLwdZySmghhsE8Acn
+        value: VIcpLwdZySmghhsE8Acn  # Mot de passe de la base de données
