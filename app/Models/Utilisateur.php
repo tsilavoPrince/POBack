@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Utilisateur extends Model
 {
     use HasApiTokens;
+    //use HasApiTokens ,Notifiable;
     use HasFactory;
 
     //protected $table = 'utilisateurs'; // Spécifie le nom de la table

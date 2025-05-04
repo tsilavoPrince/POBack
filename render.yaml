@@ -1,41 +1,30 @@
 services:
   - type: web
     name: laravel-app
-    env: docker
-    plan: free
-    buildCommand: ""
-    startCommand: "sh -c 'php artisan serve --host=0.0.0.0 --port=3000'"
-    dockerfilePath: ./Dockerfile
+    env: php
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:cache
+      php artisan route:cache
+      php artisan view:cache
+    startCommand: |
+      php artisan migrate --force && \
+      php artisan serve --host 0.0.0.0 --port 10000
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        value: base64:2dx4xrONv1qafa8+1+WE36ntZX+flWc9tdAqjfMVYZg=
+        value: base64:S446i6W2xL50xY9EVc460paAwgpaD7CbqmQncYEt8ks=
+        generateValue: true
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        value: bthojbfewx8u3cjzcgrh-mysql.services.clever-cloud.com
+        value: btefqcdii9lfuqunnm5u-mysql.services.clever-cloud.com
       - key: DB_PORT
-        value: "3306"
+        value: 3306
       - key: DB_DATABASE
-        value: bthojbfewx8u3cjzcgrh
+        value: btefqcdii9lfuqunnm5u
       - key: DB_USERNAME
-        value: upbsp8xzqcrjl47q
+        value: utajwenhwaa41bcr
       - key: DB_PASSWORD
-        value: JpWLLiLGy2xhEDmp37uh
-    autoDeploy: true
-    github:
-      branch: main
-
-  - type: database
-    name: mysql-db
-    plan: free
-    databaseType: mysql
-    databaseVersion: 5.7
-    envVars:
-      - key: MYSQL_DATABASE
-        value: bthojbfewx8u3cjzcgrh
-      - key: MYSQL_USER
-        value: upbsp8xzqcrjl47q
-      - key: MYSQL_PASSWORD
-        value: JpWLLiLGy2xhEDmp37uh
+        value: VIcpLwdZySmghhsE8Acn
