@@ -4,12 +4,13 @@ services:
     env: docker
     plan: free
     autoDeploy: true
+    buildCommand: ""  # Nous n'en avons pas besoin ici avec Docker
+    startCommand: ""  # Pas nécessaire ici, géré par le Dockerfile
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        value: base64:S446i6W2xL50xY9EVc460paAwgpaD7CbqmQncYEt8ks=
-        generateValue: true
+        value: base64:S446i6W2xL50xY9EVc460paAwgpaD7CbqmQncYEt8ks=  # Si tu l’as déjà générée, ne pas cocher generateValue: true
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
