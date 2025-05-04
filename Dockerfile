@@ -1,29 +1,22 @@
-# Utilise une image officielle PHP avec Apache
-FROM php:8.2-apache
+FROM php:8.0-fpm
 
-# Installer les dépendances système
-RUN apt-get update && apt-get install -y \
-    git curl libpng-dev libonig-dev libxml2-dev zip unzip libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# Installer les dépendances nécessaires
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev libzip-dev git unzip && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd zip pdo pdo_mysql
 
 # Installer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copier les fichiers Laravel dans le container
-COPY . /var/www/html
+# Copier les fichiers du projet dans l'image
+COPY . /var/www
 
-# Installer les dépendances Laravel
-WORKDIR /var/www/html
-RUN composer install --no-dev --optimize-autoloader
+# Définir les permissions
+RUN chown -R www-data:www-data /var/www
 
-# Donner les bons droits
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Installer les dépendances via Composer
+WORKDIR /var/www
+RUN composer install --optimize-autoloader --no-dev --no-scripts
 
-# Copier le fichier .env (facultatif si tu passes les variables via Render)
-# COPY .env.example .env
-
-# Générer le cache de config, routes et vues
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
-
-# Lancer les migrations automatiquement (avec --force)
-CMD php artisan migrate --force && apache2-foreground
+# Configurer le serveur pour servir Laravel
+CMD ["php", "-S", "0.0.0.0:3000", "-t", "public"]

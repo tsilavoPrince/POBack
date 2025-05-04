@@ -3,23 +3,39 @@ services:
     name: laravel-app
     env: docker
     plan: free
-    autoDeploy: true
-    buildCommand: ""  # Nous n'en avons pas besoin ici avec Docker
-    startCommand: ""  # Pas nécessaire ici, géré par le Dockerfile
+    buildCommand: ""
+    startCommand: "sh -c 'php artisan serve --host=0.0.0.0 --port=3000'"
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        value: base64:S446i6W2xL50xY9EVc460paAwgpaD7CbqmQncYEt8ks=  # Si tu l’as déjà générée, ne pas cocher generateValue: true
+        value: base64:7/c4sS2MJUurbaSvWfUDyaAGkT5Wg+vIjk4BQARO1PY=
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        value: btefqcdii9lfuqunnm5u-mysql.services.clever-cloud.com  # Hôte de la base de données
+        value: bthojbfewx8u3cjzcgrh-mysql.services.clever-cloud.com
       - key: DB_PORT
-        value: 3306  # Port de la base de données
+        value: "3306"
       - key: DB_DATABASE
-        value: btefqcdii9lfuqunnm5u  # Nom de la base de données
+        value: bthojbfewx8u3cjzcgrh
       - key: DB_USERNAME
-        value: utajwenhwaa41bcr  # Utilisateur de la base de données
+        value: upbsp8xzqcrjl47q
       - key: DB_PASSWORD
-        value: VIcpLwdZySmghhsE8Acn  # Mot de passe de la base de données
+        value: JpWLLiLGy2xhEDmp37uh
+    autoDeploy: true
+    github:
+      branch: main
+
+  - type: database
+    name: mysql-db
+    plan: free
+    databaseType: mysql
+    databaseVersion: 5.7
+    envVars:
+      - key: MYSQL_DATABASE
+        value: bthojbfewx8u3cjzcgrh
+      - key: MYSQL_USER
+        value: upbsp8xzqcrjl47q
+      - key: MYSQL_PASSWORD
+        value: JpWLLiLGy2xhEDmp37uh
